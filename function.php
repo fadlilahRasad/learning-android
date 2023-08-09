@@ -30,6 +30,20 @@ $readonly_users = array(
     'user'
 );
 
+if( !function_exists('random_bytes') )
+{
+    function random_bytes($length = 6)
+    {
+        $characters = '0123456789';
+        $characters_length = strlen($characters);
+        $output = '';
+        for ($i = 0; $i < $length; $i++)
+            $output .= $characters[rand(0, $characters_length - 1)];
+
+        return $output;
+    }
+}
+
 // Global readonly, including when auth is not being used
 $global_readonly = false;
 
@@ -3685,20 +3699,6 @@ global $lang, $root_url, $favicon_path;
 </body>
 </html>
 <?php
-}
-
-if( !function_exists('random_bytes') )
-{
-    function random_bytes($length = 6)
-    {
-        $characters = '0123456789';
-        $characters_length = strlen($characters);
-        $output = '';
-        for ($i = 0; $i < $length; $i++)
-            $output .= $characters[rand(0, $characters_length - 1)];
-
-        return $output;
-    }
 }
 /**
  * Show Header after login
