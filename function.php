@@ -421,7 +421,7 @@ if (isset($_POST['ajax']) && !FM_READONLY) {
         $file = str_replace('/', '', $file);
         if ($file == '' || !is_file($path . '/' . $file)) {
             fm_set_msg('File not found', 'error');
-            fm_redirect(FM_SELF_URL . '?p=' . urlencode(FM_PATH));
+            $FM_PATH=FM_PATH; fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
         }
         header('X-XSS-Protection:0');
         $file_path = $path . '/' . $file;
@@ -601,7 +601,7 @@ if (isset($_GET['del']) && !FM_READONLY) {
     } else {
         fm_set_msg('Invalid file or folder name', 'error');
     }
-    fm_redirect(FM_SELF_URL . '?p=' . urlencode(FM_PATH));
+    $FM_PATH=FM_PATH; fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
 }
 
 // Create folder
@@ -636,7 +636,7 @@ if (isset($_GET['new']) && isset($_GET['type']) && !FM_READONLY) {
     } else {
         fm_set_msg('Invalid characters in file or folder name', 'error');
     }
-    fm_redirect(FM_SELF_URL . '?p=' . urlencode(FM_PATH));
+    $FM_PATH=FM_PATH; fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
 }
 
 // Copy folder / file
@@ -647,7 +647,7 @@ if (isset($_GET['copy'], $_GET['finish']) && !FM_READONLY) {
     // empty path
     if ($copy == '') {
         fm_set_msg('Source path not defined', 'error');
-        fm_redirect(FM_SELF_URL . '?p=' . urlencode(FM_PATH));
+        $FM_PATH=FM_PATH; fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
     }
     // abs path from
     $from = FM_ROOT_PATH . '/' . $copy;
@@ -707,7 +707,7 @@ if (isset($_GET['copy'], $_GET['finish']) && !FM_READONLY) {
            fm_set_msg('Paths must be not equal', 'alert');
        }
     }
-    fm_redirect(FM_SELF_URL . '?p=' . urlencode(FM_PATH));
+    $FM_PATH=FM_PATH; fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
 }
 
 // Mass copy files/ folders
@@ -725,12 +725,12 @@ if (isset($_POST['file'], $_POST['copy_to'], $_POST['finish']) && !FM_READONLY) 
     }
     if ($path == $copy_to_path) {
         fm_set_msg('Paths must be not equal', 'alert');
-        fm_redirect(FM_SELF_URL . '?p=' . urlencode(FM_PATH));
+        $FM_PATH=FM_PATH; fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
     }
     if (!is_dir($copy_to_path)) {
         if (!fm_mkdir($copy_to_path, true)) {
             fm_set_msg('Unable to create destination folder', 'error');
-            fm_redirect(FM_SELF_URL . '?p=' . urlencode(FM_PATH));
+            $FM_PATH=FM_PATH; fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
         }
     }
     // move?
@@ -768,7 +768,7 @@ if (isset($_POST['file'], $_POST['copy_to'], $_POST['finish']) && !FM_READONLY) 
     } else {
         fm_set_msg('Nothing selected', 'alert');
     }
-    fm_redirect(FM_SELF_URL . '?p=' . urlencode(FM_PATH));
+    $FM_PATH=FM_PATH; fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
 }
 
 // Rename
@@ -796,7 +796,7 @@ if (isset($_GET['ren'], $_GET['to']) && !FM_READONLY) {
     } else {
         fm_set_msg('Invalid characters in file name', 'error');
     }
-    fm_redirect(FM_SELF_URL . '?p=' . urlencode(FM_PATH));
+    $FM_PATH=FM_PATH; fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
 }
 
 // Download
@@ -813,7 +813,7 @@ if (isset($_GET['dl'])) {
         exit;
     } else {
         fm_set_msg('File not found', 'error');
-        fm_redirect(FM_SELF_URL . '?p=' . urlencode(FM_PATH));
+        $FM_PATH=FM_PATH; fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
     }
 }
 
@@ -915,7 +915,7 @@ if (isset($_POST['group'], $_POST['delete']) && !FM_READONLY) {
         fm_set_msg('Nothing selected', 'alert');
     }
 
-    fm_redirect(FM_SELF_URL . '?p=' . urlencode(FM_PATH));
+    $FM_PATH=FM_PATH; fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
 }
 
 // Pack files
@@ -932,7 +932,7 @@ if (isset($_POST['group']) && (isset($_POST['zip']) || isset($_POST['tar'])) && 
 
     if (($ext == "zip" && !class_exists('ZipArchive')) || ($ext == "tar" && !class_exists('PharData'))) {
         fm_set_msg('Operations with archives are not available', 'error');
-        fm_redirect(FM_SELF_URL . '?p=' . urlencode(FM_PATH));
+        $FM_PATH=FM_PATH; fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
     }
 
     $files = $_POST['file'];
@@ -964,7 +964,7 @@ if (isset($_POST['group']) && (isset($_POST['zip']) || isset($_POST['tar'])) && 
         fm_set_msg('Nothing selected', 'alert');
     }
 
-    fm_redirect(FM_SELF_URL . '?p=' . urlencode(FM_PATH));
+    $FM_PATH=FM_PATH; fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
 }
 
 // Unpack
@@ -990,7 +990,7 @@ if (isset($_GET['unzip']) && !FM_READONLY) {
 
     if (($ext == "zip" && !class_exists('ZipArchive')) || ($ext == "tar" && !class_exists('PharData'))) {
         fm_set_msg('Operations with archives are not available', 'error');
-        fm_redirect(FM_SELF_URL . '?p=' . urlencode(FM_PATH));
+        $FM_PATH=FM_PATH; fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
     }
 
     if ($isValid) {
@@ -1029,7 +1029,7 @@ if (isset($_GET['unzip']) && !FM_READONLY) {
     } else {
         fm_set_msg('File not found', 'error');
     }
-    fm_redirect(FM_SELF_URL . '?p=' . urlencode(FM_PATH));
+    $FM_PATH=FM_PATH; fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
 }
 
 // Change Perms (not for Windows)
@@ -1044,7 +1044,7 @@ if (isset($_POST['chmod']) && !FM_READONLY && !FM_IS_WIN) {
     $file = str_replace('/', '', $file);
     if ($file == '' || (!is_file($path . '/' . $file) && !is_dir($path . '/' . $file))) {
         fm_set_msg('File not found', 'error');
-        fm_redirect(FM_SELF_URL . '?p=' . urlencode(FM_PATH));
+        $FM_PATH=FM_PATH; fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
     }
 
     $mode = 0;
@@ -1082,7 +1082,7 @@ if (isset($_POST['chmod']) && !FM_READONLY && !FM_IS_WIN) {
         fm_set_msg('Permissions not changed', 'error');
     }
 
-    fm_redirect(FM_SELF_URL . '?p=' . urlencode(FM_PATH));
+    $FM_PATH=FM_PATH; fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
 }
 
 /*************************** /ACTIONS ***************************/
@@ -1218,7 +1218,7 @@ if (isset($_POST['copy']) && !FM_READONLY) {
     $copy_files = isset($_POST['file']) ? $_POST['file'] : null;
     if (!is_array($copy_files) || empty($copy_files)) {
         fm_set_msg('Nothing selected', 'alert');
-        fm_redirect(FM_SELF_URL . '?p=' . urlencode(FM_PATH));
+        $FM_PATH=FM_PATH; fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
     }
 
     fm_show_header(); // HEADER
@@ -1263,7 +1263,7 @@ if (isset($_GET['copy']) && !isset($_GET['finish']) && !FM_READONLY) {
     $copy = fm_clean_path($copy);
     if ($copy == '' || !file_exists(FM_ROOT_PATH . '/' . $copy)) {
         fm_set_msg('File not found', 'error');
-        fm_redirect(FM_SELF_URL . '?p=' . urlencode(FM_PATH));
+        $FM_PATH=FM_PATH; fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
     }
 
     fm_show_header(); // HEADER
@@ -1480,7 +1480,7 @@ if (isset($_GET['view'])) {
     $file = str_replace('/', '', $file);
     if ($file == '' || !is_file($path . '/' . $file) || in_array($file, $GLOBALS['exclude_items'])) {
         fm_set_msg('File not found', 'error');
-        fm_redirect(FM_SELF_URL . '?p=' . urlencode(FM_PATH));
+        $FM_PATH=FM_PATH; fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
     }
 
     if(!$quickView) {
@@ -1675,7 +1675,7 @@ if (isset($_GET['edit'])) {
     $file = str_replace('/', '', $file);
     if ($file == '' || !is_file($path . '/' . $file)) {
         fm_set_msg('File not found', 'error');
-        fm_redirect(FM_SELF_URL . '?p=' . urlencode(FM_PATH));
+        $FM_PATH=FM_PATH; fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
     }
     header('X-XSS-Protection:0');
     fm_show_header(); // HEADER
@@ -1770,7 +1770,7 @@ if (isset($_GET['chmod']) && !FM_READONLY && !FM_IS_WIN) {
     $file = str_replace('/', '', $file);
     if ($file == '' || (!is_file($path . '/' . $file) && !is_dir($path . '/' . $file))) {
         fm_set_msg('File not found', 'error');
-        fm_redirect(FM_SELF_URL . '?p=' . urlencode(FM_PATH));
+        $FM_PATH=FM_PATH; fm_redirect(FM_SELF_URL . '?p=' . urlencode($FM_PATH));
     }
 
     fm_show_header(); // HEADER
