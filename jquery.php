@@ -3168,10 +3168,6 @@ function fm_download_file($fileLocation, $fileName, $chunkSize  = 1024)
 
     $contentType = fm_get_file_mimes($extension);
 
-    if(is_array($contentType)) {
-        $contentType = implode(' ', $contentType);
-    }
-
     $size = filesize($fileLocation);
 
     if ($size == 0) {
